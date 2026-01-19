@@ -104,11 +104,11 @@ When used standalone (without panel):
 
 The package includes comprehensive documentation available in the Accelade docs portal:
 
-- **Overview** - Introduction and page concepts
-- **Layouts** - Available layouts and customization
-- **Headers & Slots** - Working with slots and custom headers
-- **Examples** - Real-world usage examples
-- **PHP Classes** - Using Page classes programmatically
+- [Getting Started](docs/getting-started.md) - Installation and basic usage
+- [Layouts](docs/layouts.md) - Available layouts and customization
+- [Headers & Slots](docs/slots.md) - Working with slots and custom headers
+- [Examples](docs/examples.md) - Real-world usage examples
+- [PHP Classes](docs/php-classes.md) - Using Page classes programmatically
 
 ## Testing
 
