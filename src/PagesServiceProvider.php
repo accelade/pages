@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace Accelade\Pages;
 
+use Illuminate\Support\Facades\Blade;
 use Illuminate\Support\ServiceProvider;
 
 class PagesServiceProvider extends ServiceProvider
@@ -15,7 +16,7 @@ class PagesServiceProvider extends ServiceProvider
     {
         // Merge config
         $this->mergeConfigFrom(
-            __DIR__ . '/../config/accelade-pages.php',
+            __DIR__.'/../config/accelade-pages.php',
             'accelade-pages'
         );
 
@@ -28,10 +29,13 @@ class PagesServiceProvider extends ServiceProvider
     public function boot(): void
     {
         // Load translations
-        $this->loadTranslationsFrom(__DIR__ . '/../resources/lang', 'pages');
+        $this->loadTranslationsFrom(__DIR__.'/../resources/lang', 'pages');
 
         // Load views
-        $this->loadViewsFrom(__DIR__ . '/../resources/views', 'pages');
+        $this->loadViewsFrom(__DIR__.'/../resources/views', 'pages');
+
+        // Register Blade components
+        $this->registerBladeComponents();
 
         // Register documentation after all service providers are booted
         $this->app->booted(function () {
@@ -41,12 +45,12 @@ class PagesServiceProvider extends ServiceProvider
         if ($this->app->runningInConsole()) {
             // Publish config
             $this->publishes([
-                __DIR__ . '/../config/accelade-pages.php' => config_path('accelade-pages.php'),
+                __DIR__.'/../config/accelade-pages.php' => config_path('accelade-pages.php'),
             ], 'accelade-pages-config');
 
             // Publish views
             $this->publishes([
-                __DIR__ . '/../resources/views' => resource_path('views/vendor/pages'),
+                __DIR__.'/../resources/views' => resource_path('views/vendor/pages'),
             ], 'accelade-pages-views');
 
             // Register commands
@@ -54,6 +58,15 @@ class PagesServiceProvider extends ServiceProvider
                 Commands\InstallPagesCommand::class,
             ]);
         }
+    }
+
+    /**
+     * Register Blade components.
+     */
+    protected function registerBladeComponents(): void
+    {
+        Blade::component('pages::components.page', 'pages::page');
+        Blade::component(Components\Page::class, 'accelade-page');
     }
 
     /**
@@ -68,18 +81,62 @@ class PagesServiceProvider extends ServiceProvider
         $docs = $this->app->make('accelade.docs');
 
         // Register package path
-        $docs->registerPackage('pages', __DIR__ . '/../docs');
+        $docs->registerPackage('pages', __DIR__.'/../docs');
 
-        // Register navigation group
-        $docs->registerGroup('pages', 'Pages', 'document-text', 50);
+        // Register pages group
+        $docs->registerGroup('pages', 'Pages', 'document-text', 60);
 
-        // Register sections
+        // Register sub-groups
+        $docs->registerSubgroup('pages', 'layouts', '🖼️ Layouts', '', 10);
+        $docs->registerSubgroup('pages', 'usage', '📖 Usage', '', 20);
+
+        // Overview (at group level)
         $docs->section('pages-overview')
             ->label('Overview')
+            ->icon('📄')
             ->markdown('getting-started.md')
             ->package('pages')
-            ->icon('document-text')
             ->inGroup('pages')
+            ->demo()
+            ->register();
+
+        // Layouts sub-group
+        $docs->section('pages-layouts')
+            ->label('Layouts')
+            ->icon('🎨')
+            ->markdown('layouts.md')
+            ->package('pages')
+            ->inGroup('pages')
+            ->inSubgroup('layouts')
+            ->demo()
+            ->register();
+
+        $docs->section('pages-slots')
+            ->label('Headers & Slots')
+            ->icon('🧱')
+            ->markdown('slots.md')
+            ->package('pages')
+            ->inGroup('pages')
+            ->inSubgroup('layouts')
+            ->register();
+
+        // Usage sub-group
+        $docs->section('pages-examples')
+            ->label('Examples')
+            ->icon('💡')
+            ->markdown('examples.md')
+            ->package('pages')
+            ->inGroup('pages')
+            ->inSubgroup('usage')
+            ->register();
+
+        $docs->section('pages-php-classes')
+            ->label('PHP Classes')
+            ->icon('⚙️')
+            ->markdown('php-classes.md')
+            ->package('pages')
+            ->inGroup('pages')
+            ->inSubgroup('usage')
             ->register();
     }
 }

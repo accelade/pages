@@ -1,13 +1,16 @@
 {
     "name": "accelade/pages",
-    "description": "Pages plugin for Accelade",
+    "description": "Build structured pages with consistent layouts, headers, footers, and slots for Laravel applications",
     "version": "1.0.0",
     "type": "library",
     "license": "MIT",
     "keywords": [
         "laravel",
         "accelade",
-        "plugin"
+        "pages",
+        "layouts",
+        "blade-components",
+        "admin-panel"
     ],
     "authors": [
         {
@@ -54,9 +57,6 @@
             "providers": [
                 "Accelade\\Pages\\PagesServiceProvider"
             ]
-        },
-        "accelade": {
-            "plugin": "Accelade\\Pages\\PagesPlugin"
         }
     },
     "minimum-stability": "dev",

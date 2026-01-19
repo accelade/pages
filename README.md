@@ -1,36 +1,114 @@
-# {{ studly_name }}
+# Accelade Pages
 
-[![Latest Version on Packagist](https://img.shields.io/packagist/v/{{ vendor_lower }}/{{ kebab_name }}.svg?style=flat-square)](https://packagist.org/packages/{{ vendor_lower }}/{{ kebab_name }})
-[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/{{ vendor_lower }}/{{ kebab_name }}/tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/{{ vendor_lower }}/{{ kebab_name }}/actions?query=workflow%3Atests+branch%3Amain)
-[![Total Downloads](https://img.shields.io/packagist/dt/{{ vendor_lower }}/{{ kebab_name }}.svg?style=flat-square)](https://packagist.org/packages/{{ vendor_lower }}/{{ kebab_name }})
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/accelade/pages.svg?style=flat-square)](https://packagist.org/packages/accelade/pages)
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/accelade/pages/tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/accelade/pages/actions?query=workflow%3Atests+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/accelade/pages.svg?style=flat-square)](https://packagist.org/packages/accelade/pages)
 
-{{ plugin_description }}
+Build structured pages with consistent layouts, headers, footers, and slots for Laravel applications. Part of the Accelade ecosystem.
+
+## Features
+
+- **Page Component** - `<x-pages::page>` for consistent page structure
+- **Multiple Layouts** - App (full), Simple (centered card), Empty (minimal)
+- **Headers & Footers** - Customizable heading, subheading, and footer slots
+- **Panel Integration** - Automatically uses panel layouts when available
+- **Standalone Mode** - Works independently without panel package
+- **Accelade Integration** - Includes `@acceladeStyles` and `@acceladeScripts` directives
 
 ## Installation
 
 You can install the package via composer:
 
 ```bash
-composer require {{ vendor_lower }}/{{ kebab_name }}
+composer require accelade/pages
 ```
 
 You can publish the config file with:
 
 ```bash
-php artisan vendor:publish --tag="{{ config_name }}-config"
+php artisan vendor:publish --tag="accelade-pages-config"
 ```
 
-## Usage
+## Quick Start
 
-```php
-// Usage examples here
+### Basic Page
+
+```blade
+<x-pages::page title="Dashboard" heading="Dashboard" subheading="Welcome to your dashboard">
+    <div class="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+        {{-- Your content --}}
+    </div>
+</x-pages::page>
 ```
+
+### Page with Custom Header
+
+```blade
+<x-pages::page title="Users">
+    <x-slot:header>
+        <div class="flex items-center justify-between">
+            <h1 class="text-2xl font-bold">User Management</h1>
+            <button class="btn btn-primary">Add User</button>
+        </div>
+    </x-slot:header>
+
+    {{-- Content --}}
+</x-pages::page>
+```
+
+### Simple Layout (Login/Register)
+
+```blade
+<x-pages::page layout="simple" title="Login">
+    <form>
+        {{-- Login form --}}
+    </form>
+
+    <x-slot:footer>
+        <a href="/register">Don't have an account? Register</a>
+    </x-slot:footer>
+</x-pages::page>
+```
+
+### Empty Layout
+
+```blade
+<x-pages::page layout="empty" title="Print Preview">
+    {{-- Minimal content without any chrome --}}
+</x-pages::page>
+```
+
+## Layouts
+
+| Layout | Description |
+|--------|-------------|
+| `app` | Full layout with header, sidebar, footer (default) |
+| `simple` | Centered card layout, ideal for auth pages |
+| `empty` | Minimal layout without any chrome |
+
+## Panel Integration
+
+When used with `accelade/panel`, pages automatically:
+
+- Use panel's themed layouts (`panel::layouts.app`, etc.)
+- Include panel's navigation, header, and footer
+- Apply panel's color scheme and theme
+
+When used standalone (without panel):
+
+- Uses built-in responsive layouts
+- Includes dark mode toggle
+- Integrates Accelade notifications
 
 ## Documentation
 
-The package includes comprehensive documentation:
+The package includes comprehensive documentation available in the Accelade docs portal:
 
-- [Getting Started](docs/getting-started.md) - Installation and basic usage
+- **Overview** - Introduction and page concepts
+- **Layouts** - Available layouts and customization
+- **Headers & Slots** - Working with slots and custom headers
+- **Examples** - Real-world usage examples
+- **PHP Classes** - Using Page classes programmatically
 
 ## Testing
 
@@ -62,7 +140,7 @@ Please review [our security policy](.github/SECURITY.md) on how to report securi
 
 ## Credits
 
-- [Fady Mondy](https://github.com/{{ vendor_lower }})
+- [Fady Mondy](https://github.com/3x1io)
 - [All Contributors](../../contributors)
 
 ## License
