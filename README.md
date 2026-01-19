@@ -1,0 +1,70 @@
+# {{ studly_name }}
+
+[![Latest Version on Packagist](https://img.shields.io/packagist/v/{{ vendor_lower }}/{{ kebab_name }}.svg?style=flat-square)](https://packagist.org/packages/{{ vendor_lower }}/{{ kebab_name }})
+[![GitHub Tests Action Status](https://img.shields.io/github/actions/workflow/status/{{ vendor_lower }}/{{ kebab_name }}/tests.yml?branch=main&label=tests&style=flat-square)](https://github.com/{{ vendor_lower }}/{{ kebab_name }}/actions?query=workflow%3Atests+branch%3Amain)
+[![Total Downloads](https://img.shields.io/packagist/dt/{{ vendor_lower }}/{{ kebab_name }}.svg?style=flat-square)](https://packagist.org/packages/{{ vendor_lower }}/{{ kebab_name }})
+
+{{ plugin_description }}
+
+## Installation
+
+You can install the package via composer:
+
+```bash
+composer require {{ vendor_lower }}/{{ kebab_name }}
+```
+
+You can publish the config file with:
+
+```bash
+php artisan vendor:publish --tag="{{ config_name }}-config"
+```
+
+## Usage
+
+```php
+// Usage examples here
+```
+
+## Documentation
+
+The package includes comprehensive documentation:
+
+- [Getting Started](docs/getting-started.md) - Installation and basic usage
+
+## Testing
+
+```bash
+# Run tests
+composer test
+
+# Run tests with coverage
+composer test:coverage
+
+# Run code formatter
+composer format
+
+# Run mago linter
+composer mago
+```
+
+## Changelog
+
+Please see [CHANGELOG](CHANGELOG.md) for more information on what has changed recently.
+
+## Contributing
+
+Please see [CONTRIBUTING](.github/CONTRIBUTING.md) for details.
+
+## Security Vulnerabilities
+
+Please review [our security policy](.github/SECURITY.md) on how to report security vulnerabilities.
+
+## Credits
+
+- [Fady Mondy](https://github.com/{{ vendor_lower }})
+- [All Contributors](../../contributors)
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE.md) for more information.
