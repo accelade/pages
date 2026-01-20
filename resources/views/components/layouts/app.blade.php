@@ -19,9 +19,6 @@
     <html
         lang="{{ str_replace('_', '-', app()->getLocale()) }}"
         class="h-full"
-        x-data="{ darkMode: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches) }"
-        x-init="$watch('darkMode', val => localStorage.setItem('theme', val ? 'dark' : 'light'))"
-        :class="{ 'dark': darkMode }"
     >
     <head>
         <meta charset="utf-8">
@@ -44,12 +41,38 @@
         @stack('styles')
     </head>
     <body class="min-h-full font-sans antialiased bg-gray-50 dark:bg-gray-950 text-gray-900 dark:text-gray-100">
-        <div class="min-h-screen">
-            {{-- Main content --}}
-            <main class="p-4 lg:p-6">
-                {{ $slot }}
-            </main>
-        </div>
+        {{-- Dark Mode Handler --}}
+        <x-accelade::data :default="['darkMode' => false]" store="app" persist="darkMode">
+            <x-accelade::script>
+                // Initialize dark mode from localStorage or system preference
+                const savedTheme = localStorage.getItem('theme');
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                const isDark = savedTheme === 'dark' || (!savedTheme && prefersDark);
+
+                if (isDark) {
+                    document.documentElement.classList.add('dark');
+                    $set('darkMode', true);
+                }
+
+                // Watch for dark mode changes
+                $watch('darkMode', (value) => {
+                    if (value) {
+                        document.documentElement.classList.add('dark');
+                        localStorage.setItem('theme', 'dark');
+                    } else {
+                        document.documentElement.classList.remove('dark');
+                        localStorage.setItem('theme', 'light');
+                    }
+                });
+            </x-accelade::script>
+
+            <div class="min-h-screen">
+                {{-- Main content --}}
+                <main class="p-4 lg:p-6">
+                    {{ $slot }}
+                </main>
+            </div>
+        </x-accelade::data>
 
         {{-- Notifications --}}
         @if(class_exists(\Accelade\Accelade\AcceladeServiceProvider::class))

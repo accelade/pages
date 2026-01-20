@@ -13,6 +13,8 @@
     $panel = $panelManager?->getCurrent();
 
     // Determine the correct layout
+    // For anonymous Blade components, use package::component-path syntax
+    // (Laravel looks in resources/views/components/ automatically)
     if ($panel) {
         // Use panel layouts when panel is active
         $layoutComponent = match($layout) {
@@ -23,9 +25,9 @@
     } else {
         // Use pages package layouts (standalone)
         $layoutComponent = match($layout) {
-            'simple' => 'pages::components.layouts.simple',
-            'empty' => 'pages::components.layouts.empty',
-            default => 'pages::components.layouts.app',
+            'simple' => 'pages::layouts.simple',
+            'empty' => 'pages::layouts.empty',
+            default => 'pages::layouts.app',
         };
     }
 @endphp
